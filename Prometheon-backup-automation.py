@@ -29,10 +29,10 @@ load_env_file("/home/prom/prom-file-automation-do-not-delete/.env")
 
 #Mail parameters
 EMAIL_ENABLED = True
-SMTP_USER = os.environ.get('MAIL_USERNAME')
-SMTP_PASS = os.environ.get('MAIL_PASSWORD')
-SMTP_HOST = os.environ.get('MAIL_SERVER')
-SMTP_PORT = int(os.environ.get('SMTP_PORT', 465))
+SMTP_USER = os.environ.get('SMTP_USER')
+SMTP_PASS = os.environ.get('SMTP_PASS')
+SMTP_HOST = os.environ.get('SMTP_HOST')
+SMTP_PORT = int(os.environ.get('SMTP_PORT'))
 EMAIL_FROM = os.environ.get('EMAIL_FROM')
 EMAIL_TO = os.environ.get('EMAIL_TO')
 
