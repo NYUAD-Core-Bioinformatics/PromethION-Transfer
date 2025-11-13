@@ -6,11 +6,8 @@ The transfer script runs as a cron job every 3 days at 12:00 AM, performing auto
 #### Data Transfer flow
 
 - Script identifies complete sequencing runs using final_summary*.txt
-- Performs rsync #1 — copies the entire run folder to the remote storage
-- After rsync #1 completes successfully, the script:
-- Creates a local .rsync_done file.
-- Performs rsync #2 — syncs only the .rsync_done file to the remote server
-- Once .rsync_done file is confirmed synced, local run directory is deleted
+- Performs rsync — copies the entire run folder to the remote storage
+- After rsync  completes successfully, the local run directory is deleted
 - Summary email is sent at end of process:
     Success → if all runs transferred
     Failure → if any run failed or SSH timed out

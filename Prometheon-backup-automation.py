@@ -40,7 +40,6 @@ EMAIL_TO = os.environ.get('EMAIL_TO')
 
 # === Copy Settings ===
 DELETE_AFTER_COPY = True
-DONE_MARKER = ".rsync_done"
 RSYNC = shutil.which("rsync")
 
 # === Logging Setup ===
@@ -86,9 +85,6 @@ def find_rundir():
             results.append(d)
     return results
 
-# === Create Done Marker ===
-def run_mark_done(dest_run_dir):
-    Path(dest_run_dir, DONE_MARKER).touch()
 
 # === Rsync Execution (single attempt) ===
 def run_rsync(src_dir, dest_parent):
@@ -150,8 +146,6 @@ def main():
         if run_rsync(run_dir, dest_parent):
             processed += 1
             processed_runs.append(run_dir)
-            run_mark_done(run_dir)
-            logging.info(f"Done marker created: {run_dir}/{DONE_MARKER}")
 
             if DELETE_AFTER_COPY:
                 shutil.rmtree(run_dir)
@@ -162,7 +156,7 @@ def main():
             logging.error(f"FAIL - PromethION Transfer for {run_id}")
 
     # === Final Summary ===
-    duration_sec=round((datetime.datetime.now()- start).total_seconds() / 60, 2)
+    duration=round((datetime.datetime.now()- start).total_seconds() / 60, 2)
     summary = (
         "Run Backup Job Summary\n"
         "============================================\n"
