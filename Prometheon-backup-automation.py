@@ -28,7 +28,7 @@ load_env_file("/home/prom/prom-file-automation-do-not-delete/.env")
 
 
 #Mail parameters
-MAIL_ENABLED = True
+EMAIL_ENABLED = True
 SMTP_USER = os.environ.get('MAIL_USERNAME')
 SMTP_PASS = os.environ.get('MAIL_PASSWORD')
 SMTP_HOST = os.environ.get('MAIL_SERVER')
@@ -183,7 +183,7 @@ def main():
     logging.info("\n" + summary)
     print("\n" + summary)
 
-    # === Send a single summary email (skip if nothing processed or failed) ===
+    # === Send a single summary email.
     if processed > 0 or failed > 0:
         if failed == 0:
             subject = f"SUCCESS: PromethION Transfer"
