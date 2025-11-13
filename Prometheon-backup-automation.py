@@ -162,7 +162,6 @@ def main():
             logging.error(f"FAIL - PromethION Transfer for {run_id}")
 
     # === Final Summary ===
-    duration = (datetime.datetime.now() - start).total_seconds()
     duration_sec=round((datetime.datetime.now()- start).total_seconds() / 60, 2)
     summary = (
         "Run Backup Job Summary\n"
