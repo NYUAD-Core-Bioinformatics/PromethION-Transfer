@@ -3,6 +3,20 @@
 This repository describes how to configure the PromethION data transfer automation service on a Linux system.
 The transfer script runs as a cron job every 3 days at 12:00 AM, performing automated rsync-based backups of PromethION run directories.
 
+#### Data Transfer flow
+
+- Script identifies complete sequencing runs using final_summary*.txt
+- Performs rsync #1 — copies the entire run folder to the remote storage
+- After rsync #1 completes successfully, the script:
+- Creates a local .rsync_done file.
+- Performs rsync #2 — syncs only the .rsync_done file to the remote server
+- Once .rsync_done file is confirmed synced, local run directory is deleted
+- Summary email is sent at end of process:
+    Success → if all runs transferred
+    Failure → if any run failed or SSH timed out
+- No email is sent if there are no new transfers
+
+
 #### Cron Job Configuration
 
 Add the following cron entry to schedule the backup script:
@@ -13,7 +27,7 @@ Add the following cron entry to schedule the backup script:
 
 #### Email Notification Setup
 
-Update the email account credentials in the .env file before running the script.
+Update the email account credentials in the .env file before running the script. Currently email notifications only triggers if there is any new run created or if there is a failure. No emails triggered, where there is no change. 
 
 To disable the email notification, then set ```MAIL_ENABLED = False``` in the script.
 
