@@ -34,7 +34,9 @@ SMTP_PASS = os.environ.get('SMTP_PASS')
 SMTP_HOST = os.environ.get('SMTP_HOST')
 SMTP_PORT = int(os.environ.get('SMTP_PORT'))
 EMAIL_FROM = os.environ.get('EMAIL_FROM')
-EMAIL_TO = os.environ.get('EMAIL_TO')
+#Added multiple email
+EMAIL_TO = os.environ.get("EMAIL_TO", "")
+EMAIL_TO = [e.strip() for e in EMAIL_TO.split(",") if e.strip()]
 
 
 
