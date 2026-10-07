@@ -49,6 +49,8 @@ Successfully Backed-Up Runs:
 
 #### File Deletion 
 
+For ```Prometheon-backup-automation.py```
+
 Once a run directory is successfully copied to the remote HPC $ARCHIVE storage, the source directory is deleted from the local system.
 
 In the example email summary above, only the successfully backed-up run directories will be deleted, such as:
@@ -61,6 +63,31 @@ Successfully Backed-Up Runs:
 
 Note: If you do not want the file deletion feature, then set
 ```DELETE_AFTER_COPY = False```.
+
+For ```Prometheon-14day-deletion.py```
+
+14-Day Delayed Deletion
+
+This script provides a safer alternative to immediate deletion. When a run directory containing final_summary*.txt is successfully copied to the remote HPC $ARCHIVE storage, the source directory is retained locally for an additional 14 days.
+
+After a successful rsync, the script creates the following marker inside the run directory:
+
+```
+.promethion_rsync_completed
+```
+The marker timestamp records when the successful transfer occurred. The script uses this timestamp to calculate the 14-day retention period.
+
+The workflow is:
+
+Locate run directories containing final_summary*.txt.
+
+Copy each eligible run directory to the remote HPC archive using rsync.
+
+Create .promethion_rsync_completed only after rsync succeeds.
+
+Retain the local run directory for 14 full days.
+
+Delete only the individual run directory during the first scheduled execution after the retention period expires.
 
 #### Transfer Performance
 
